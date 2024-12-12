@@ -1,5 +1,5 @@
 string: Hello, world!
-path: /path/to/file
+file_path: /path/to/file
 isize: -12345
 usize: 12345
 f32: -12345.6789
@@ -15,6 +15,5 @@ hash_map:
 tuple:
 - one
 - 1
-option: 12345
 enumerable: One
 unmatched: value

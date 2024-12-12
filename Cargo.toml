@@ -16,6 +16,7 @@ include = [
 ]
 
 [dependencies]
+envy = "0.4.2"
 rogue_logging = "^0.2"
 serde = { version = "^1.0", features = ["derive"] }
 serde_json = "^1"
