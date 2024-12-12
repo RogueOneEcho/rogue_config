@@ -89,13 +89,7 @@ jobs:
           ~/.cargo/git/db/
           target/
 
-    - run: |
-        tee config.yml <<EOF
-        ${{ secrets.CONFIG }}
-        EOF
-
     - run: cargo test --release --no-fail-fast
-      if: false
 
     - name: Run cargo check
       run: |
