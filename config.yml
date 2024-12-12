@@ -1,0 +1,19 @@
+string: Hello, world!
+path: /path/to/file
+isize: -12345
+usize: 12345
+f32: -12345.6789
+bool: true
+vec:
+- One
+- Two
+- Three
+hash_map:
+  one: 1
+  two: 2
+  three: 3
+tuple:
+- one
+- 1
+option: 12345
+enumerable: One
