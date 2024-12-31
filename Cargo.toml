@@ -17,9 +17,9 @@ include = [
 
 [dependencies]
 envy = "0.4.2"
-rogue_logging = "^0.3"
-serde = { version = "^1.0", features = ["derive"] }
-serde_json = "^1"
+rogue_logging = "0.3.0"
+serde = { version = "1.0.216", features = ["derive"] }
+serde_json = "1.0.133"
 serde_yaml = "0.9.34"
 
 [lints.clippy]
@@ -74,8 +74,5 @@ unwrap_used = "warn"
 wildcard_enum_match_arm = "allow"
 wildcard_imports = "allow"
 wrong_self_convention = "allow"
-# TODO COULD re-consider the following allows:
 result_large_err = "allow"
-
-# TODO SHOULD investigate solution to await_holding_lock
 await_holding_lock = "allow"
