@@ -1,17 +1,11 @@
-use crate::OptionsProvider;
-use rogue_logging::Error;
+use crate::{ConfigError, OptionsProvider};
 use serde::de::DeserializeOwned;
 
 pub struct EnvironmentOptionsProvider;
 
 impl OptionsProvider for EnvironmentOptionsProvider {
-    fn get<T: DeserializeOwned>() -> Result<T, Error> {
-        envy::from_env::<T>().map_err(|e| Error {
-            action: "deserialize environment variables".to_owned(),
-            message: e.to_string(),
-            domain: Some("deserialization".to_owned()),
-            ..Error::default()
-        })
+    fn get<T: DeserializeOwned>() -> Result<T, ConfigError> {
+        envy::from_env::<T>().map_err(ConfigError::envy)
     }
 }
 
@@ -22,7 +16,7 @@ mod tests {
     use std::env;
 
     #[test]
-    fn test() -> Result<(), Error> {
+    fn test() -> Result<(), ConfigError> {
         // Arrange
         env::set_var("STRING", "Hello, world!");
         env::set_var("FILE_PATH", "/path/to/file");

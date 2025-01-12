@@ -1,5 +1,4 @@
-use crate::OptionsProvider;
-use rogue_logging::Error;
+use crate::{ConfigError, OptionsProvider};
 use serde::de::DeserializeOwned;
 use std::fs::File;
 use std::io::BufReader;
@@ -10,25 +9,15 @@ const FILE_NAME: &str = "config.yml";
 pub struct YamlOptionsProvider;
 
 impl OptionsProvider for YamlOptionsProvider {
-    fn get<T: DeserializeOwned>() -> Result<T, Error> {
+    fn get<T: DeserializeOwned>() -> Result<T, ConfigError> {
         deserialize_from_file(&PathBuf::from(FILE_NAME))
     }
 }
 
-fn deserialize_from_file<T: DeserializeOwned>(path: &Path) -> Result<T, Error> {
-    let file = File::open(path).map_err(|e| Error {
-        action: "open options file".to_owned(),
-        message: e.to_string(),
-        domain: Some("file system".to_owned()),
-        ..Error::default()
-    })?;
+fn deserialize_from_file<T: DeserializeOwned>(path: &Path) -> Result<T, ConfigError> {
+    let file = File::open(path).map_err(ConfigError::fs)?;
     let reader = BufReader::new(file);
-    serde_yaml::from_reader(reader).map_err(|e| Error {
-        action: "deserialize options file".to_owned(),
-        message: e.to_string(),
-        domain: Some("deserialization".to_owned()),
-        ..Error::default()
-    })
+    serde_yaml::from_reader(reader).map_err(ConfigError::yaml)
 }
 
 #[cfg(test)]
@@ -37,7 +26,7 @@ mod tests {
     use crate::example::Example;
 
     #[test]
-    fn test() -> Result<(), Error> {
+    fn test() -> Result<(), ConfigError> {
         // Arrange
         // Act
         let options = YamlOptionsProvider::get::<Example>()?;
