@@ -1,4 +1,5 @@
 pub use env::*;
+pub use error::*;
 pub use json::*;
 pub use provider::*;
 pub use yaml::*;
@@ -8,3 +9,4 @@ mod example;
 mod json;
 mod provider;
 mod yaml;
+mod error;
